@@ -4,7 +4,7 @@ from typing import List
 
 def pascal_triangle(n: int) -> List[list]:
     '''
-    Pascal’s triangle of n representation
+    Pascal's triangle of n representatio
     '''
     if n <= 0:
         return []
@@ -20,7 +20,6 @@ def pascal_triangle(n: int) -> List[list]:
     for i in range(2, n):
         temp = [1, 1]
         for j in range(0, len(Pascal_try[-1])-1):
-
             temp.insert(-1, Pascal_try[-1][j] + Pascal_try[-1][j+1])
         Pascal_try.append(temp)
 
