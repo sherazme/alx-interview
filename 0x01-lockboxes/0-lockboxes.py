@@ -15,7 +15,7 @@ def canUnlockAll(boxes):
         return False
 
     for i in range(1, len(boxes) - 1):
-        checked = False
+        boxes_checked = False
         for j in range(len(boxes)):
             checked = i in boxes[j] and i != j
             if checked:
