@@ -1,44 +1,47 @@
 #!/usr/bin/python3
-"""script that reads stdin line by line and computes metrics"""
 
 import sys
 
 
-i = 0
-file_size = 0
-status_code = {'200': 0,
-               '301': 0,
-               '400': 0,
-               '401': 0,
-               '403': 0,
-               '404': 0,
-               '405': 0,
-               '500': 0}
+def display_msg(status_code, total_size):
+    """ print message """
+
+    print("File size: {}".format(total_size))
+    for key, val in sorted(status_code.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
+
+
+total_size = 0
+code = 0
+count = 0
+status_code = {"200": 0,
+           "301": 0,
+           "400": 0,
+           "401": 0,
+           "403": 0,
+           "404": 0,
+           "405": 0,
+           "500": 0}
 
 try:
     for line in sys.stdin:
-        arg = line.split(' ')
-        if len(arg) > 2:
-            line = arg[-2]
-            file_size = arg[-1]
-            if line in status_code:
-                status_code[line] += 1
-            file_size += int(file_size)
-            i += 1
-            if i == 10:
-                print('File size: {:d}'.format(file_size))
-                sorted_keys = sorted(status_code.keys())
-                for key in sorted_keys:
-                    value = status_code[key]
-                    if value != 0:
-                        print('{}: {}'.format(key, value))
-                i = 0
-except Exception:
-    pass
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
+
+        if len(parsed_line) > 2:
+            count += 1
+
+            if count <= 10:
+                total_size += int(parsed_line[0])
+                code = parsed_line[1]
+
+                if (code in status_code.keys()):
+                    status_code[code] += 1
+
+            if (count == 10):
+                display_msg(status_code, total_size)
+                count = 0
+
 finally:
-    print('File size: {:d}'.format(file_size))
-    s_keys = sorted(status_code.keys())
-    for key in s_keys:
-        value = status_code[key]
-        if value != 0:
-            print('{}: {}'.format(key, value))
+    display_msg(status_code, total_size)
