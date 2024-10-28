@@ -6,6 +6,7 @@ import sys
 def display_msg(status_code, total_size):
     """ print message """
 
+
     print("File size: {}".format(total_size))
     for key, val in sorted(status_code.items()):
         if val != 0:
